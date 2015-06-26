@@ -34,7 +34,7 @@ class ResettingController extends Controller
      */
     public function requestAction()
     {
-        return $this->render('FOSUserBundle:Resetting:request.html.twig');
+        return $this->render('FOSUserBundle:Resetting:request.html.php');
     }
 
     /**
@@ -48,13 +48,13 @@ class ResettingController extends Controller
         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
 
         if (null === $user) {
-            return $this->render('FOSUserBundle:Resetting:request.html.twig', array(
+            return $this->render('FOSUserBundle:Resetting:request.html.php', array(
                 'invalid_username' => $username
             ));
         }
 
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            return $this->render('FOSUserBundle:Resetting:passwordAlreadyRequested.html.twig');
+            return $this->render('FOSUserBundle:Resetting:passwordAlreadyRequested.html.php');
         }
 
         if (null === $user->getConfirmationToken()) {
@@ -84,7 +84,7 @@ class ResettingController extends Controller
             return new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
         }
 
-        return $this->render('FOSUserBundle:Resetting:checkEmail.html.twig', array(
+        return $this->render('FOSUserBundle:Resetting:checkEmail.html.php', array(
             'email' => $email,
         ));
     }
@@ -135,7 +135,7 @@ class ResettingController extends Controller
             return $response;
         }
 
-        return $this->render('FOSUserBundle:Resetting:reset.html.twig', array(
+        return $this->render('FOSUserBundle:Resetting:reset.html.php', array(
             'token' => $token,
             'form' => $form->createView(),
         ));
